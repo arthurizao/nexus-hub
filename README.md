@@ -15,6 +15,11 @@ Construído com **Glassmorphism**, paleta oficial do YouTube (Vermelho `#FF0033`
 5. **Avanço/Retrocesso Rápido:** Atalhos para pular 10s ou 30s.
 6. **Detector & Skip de Anúncios:** Muta e acelera o término de anúncios.
 
+### 📥 Download de Vídeo & Áudio
+- **Download Integrado com Seleção de Resolução:** Baixe em `1080p (Full HD)`, `720p (HD)`, `480p` ou extraia `Apenas Áudio (MP3)`.
+- **API Cobalt Integrada:** Conecta a instâncias públicas de processamento de alta velocidade para gerar o arquivo sem pop-ups ou anúncios.
+- **Atalhos Rápidos de 1-Clique:** Acesso direto ao Cobalt Web, 10Downloader e gerador de comando `yt-dlp` para terminal.
+
 ### 🎨 Cinema & Calibração Visual
 - **Filtros em Tempo Real:** Controle direto de Brilho, Contraste e Saturação no elemento `<video>`.
 - **Modos Predefinidos:** *Cores Vívidas*, *Modo Noturno Amoled* (reduz brilho e eleva contraste para telas OLED), *Preto & Branco* e *Sepia/Leitura*.
