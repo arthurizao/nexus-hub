@@ -821,118 +821,73 @@ const pages = {
 
   // DOWNLOADER (VIDEO & AUDIO)
   downloader() {
-    heading('Download de Vídeo & Áudio', 'Baixe o vídeo atual em alta qualidade (MP4) ou extraia apenas o áudio (MP3).');
+    heading('Download de Vídeo & Áudio', 'Baixe o vídeo atual em alta qualidade (MP4) ou extraia o áudio (MP3).');
     const v = getVideo();
     const vid = getVideoId();
-    const currentUrl = vid && vid !== 'demo-video' ? `https://www.youtube.com/watch?v=${vid}` : location.href;
+    const isYT = vid && vid !== 'demo-video';
+    const ytUrl = isYT ? `https://www.youtube.com/watch?v=${vid}` : location.href;
+    const directSrc = v ? (v.currentSrc || v.src || v.querySelector('source')?.src || '') : '';
 
-    const qualitySelect = el('select', {}, [
-      el('option', { value: '1080', text: 'Vídeo MP4 — 1080p (Full HD)' }),
-      el('option', { value: '720', text: 'Vídeo MP4 — 720p (HD Padrão)' }),
-      el('option', { value: '480', text: 'Vídeo MP4 — 480p (Leve / Rápido)' }),
-      el('option', { value: 'audio', text: 'Apenas Áudio — MP3 / M4A (Música)' })
+    const hero = el('div', { class: 'hero' }, [
+      el('h2', { text: isYT ? `Vídeo do YouTube: ${vid}` : 'Vídeo HTML5 Detectado' }),
+      el('p', { text: isYT ? ytUrl : (directSrc || 'Reprodutor de vídeo ativo.') })
     ]);
 
-    const statusBox = out();
-    statusBox.textContent = `Vídeo Alvo: ${currentUrl}\nEscolha o formato e clique em "Gerar Link de Download".`;
+    // Local direct video downloader (works in preview.html and direct MP4 players)
+    const localSection = el('div', { style: 'margin-bottom: 20px;' });
+    if (directSrc && !directSrc.startsWith('blob:')) {
+      localSection.append(
+        card('Download Direto do Arquivo MP4', 'Baixe o arquivo de vídeo original diretamente para o seu computador sem intermediários.',
+          btn('📥 Baixar Arquivo MP4 Direto', () => {
+            const a = document.createElement('a');
+            a.href = directSrc;
+            a.download = `video-${vid || 'download'}.mp4`;
+            a.target = '_blank';
+            a.click();
+            toast('Iniciando download do vídeo!');
+          }, true)
+        )
+      );
+    }
 
-    const downloadBtn = btn('⚡ Baixar Vídeo Agora', async () => {
-      // If local HTML5 video (like preview.html)
-      if (v && v.currentSrc && !v.currentSrc.startsWith('blob:') && vid === 'demo-video') {
-        const a = document.createElement('a');
-        a.href = v.currentSrc;
-        a.download = `video-${Date.now()}.mp4`;
-        a.click();
-        return toast('Iniciando download do vídeo local!');
-      }
-
-      downloadBtn.disabled = true;
-      statusBox.textContent = 'Consultando servidores de processamento… aguarde alguns segundos.';
-      const isAudio = qualitySelect.value === 'audio';
-
-      const instances = [
-        'https://api.cobalt.tools',
-        'https://cobalt.kwiatekm.tokyo',
-        'https://co.wuk.sh'
-      ];
-
-      let success = false;
-      for (const apiBase of instances) {
-        try {
-          const payload = {
-            url: currentUrl,
-            videoQuality: isAudio ? '720' : qualitySelect.value,
-            downloadMode: isAudio ? 'audio' : 'auto',
-            audioFormat: 'mp3'
-          };
-
-          const res = await fetch(apiBase + '/', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-
-          if (res.ok) {
-            const json = await res.json();
-            if (json.url) {
-              statusBox.replaceChildren(
-                el('div', { style: 'color: #10b981; font-weight: 700; margin-bottom: 8px;', text: '✓ Link de Download Gerado com Sucesso!' }),
-                el('p', { text: 'Clique no botão abaixo para iniciar o download direto do arquivo:' }),
-                btn('📥 Salvar Arquivo no Computador', () => {
-                  window.open(json.url, '_blank');
-                }, true)
-              );
-              toast('Download pronto!');
-              success = true;
-              break;
-            }
-          }
-        } catch (err) {
-          // try next instance
-        }
-      }
-
-      if (!success) {
-        statusBox.replaceChildren(
-          el('div', { style: 'color: #f59e0b; font-weight: 700; margin-bottom: 8px;', text: '⚠ Servidor direto sobrecarregado. Use os atalhos rápidos de 1-Clique abaixo:' }),
-          el('div', { class: 'actions' }, [
-            btn('Abrir no Cobalt Web (Sem Anúncios) ↗', () => window.open(`https://cobalt.tools/#${encodeURIComponent(currentUrl)}`, '_blank'), true),
-            btn('Abrir no 10Downloader ↗', () => window.open(`https://10downloader.com/download?v=${encodeURIComponent(currentUrl)}`, '_blank'))
-          ])
-        );
-      }
-      downloadBtn.disabled = false;
-    }, true);
-
-    const quickCards = el('div', { class: 'grid' }, [
-      card('Cobalt Tools (Limpo / Sem Anúncios)', 'O melhor downloader open-source para YouTube, sem pop-ups.',
-        btn('Abrir no Cobalt Web ↗', () => window.open(`https://cobalt.tools/#${encodeURIComponent(currentUrl)}`, '_blank'))
+    // YouTube 1-Click Online Downloaders
+    const ytGrid = el('div', { class: 'grid' }, [
+      card('SaveFrom (SS YouTube)', 'O método mais clássico e confiável. Abre direto na página de download do vídeo em MP4 (720p / 1080p).',
+        btn('📥 Baixar via SaveFrom ↗', () => {
+          const url = isYT ? `https://ssyoutube.com/watch?v=${vid}` : `https://ssyoutube.com/?url=${encodeURIComponent(location.href)}`;
+          window.open(url, '_blank');
+        }, true)
       ),
-      card('10Downloader (HD / Full HD)', 'Permite escolher todas as resoluções e faixas de áudio.',
-        btn('Abrir no 10Downloader ↗', () => window.open(`https://10downloader.com/download?v=${encodeURIComponent(currentUrl)}`, '_blank'))
+      card('Y2Mate (Vídeo & Full HD)', 'Excelente para baixar em múltiplas qualidades de vídeo MP4 e conversão rápida.',
+        btn('🎬 Baixar via Y2Mate ↗', () => {
+          const url = isYT ? `https://www.y2mate.com/youtube/${vid}` : `https://www.y2mate.com/`;
+          window.open(url, '_blank');
+        })
       ),
-      card('Comando yt-dlp para Terminal', 'Copia o comando otimizado para baixar com qualidade máxima e áudio sem perda.',
-        btn('Copiar Comando yt-dlp', () => {
-          copy(`yt-dlp -f "bv*+ba/b" --merge-output-format mp4 "${currentUrl}"`);
+      card('Converter Apenas Áudio (MP3)', 'Extraia apenas a trilha sonora ou podcast do vídeo diretamente em arquivo de áudio MP3.',
+        btn('🎵 Baixar Áudio MP3 ↗', () => {
+          const url = isYT ? `https://www.y2mate.com/youtube-mp3/${vid}` : `https://www.y2mate.com/`;
+          window.open(url, '_blank');
+        })
+      ),
+      card('Cobalt Web (Sem Anúncios)', 'Interface oficial do Cobalt open-source sem pop-ups.',
+        btn('⚡ Abrir no Cobalt Web ↗', () => {
+          window.open(`https://cobalt.tools/#${encodeURIComponent(ytUrl)}`, '_blank');
+        })
+      ),
+      card('Comando yt-dlp para Terminal', 'Copia o comando otimizado para baixar com qualidade máxima e áudio original sem perda.',
+        btn('💻 Copiar Comando yt-dlp', () => {
+          copy(`yt-dlp -f "bv*+ba/b" --merge-output-format mp4 "${ytUrl}"`);
           toast('Comando yt-dlp copiado!');
         })
       )
     ]);
 
     main.append(
-      el('div', { class: 'hero' }, [
-        el('h2', { text: 'Download de Vídeo & Áudio' }),
-        el('div', { class: 'row' }, [
-          field('Qualidade / Formato Desejado', qualitySelect)
-        ]),
-        el('div', { class: 'actions' }, [downloadBtn])
-      ]),
-      statusBox,
-      el('h2', { text: 'Opções Rápidas & Alternativas de Download:', style: 'margin-top: 24px;' }),
-      quickCards
+      hero,
+      localSection,
+      el('h2', { text: 'Opções de Download:' }),
+      ytGrid
     );
   },
 
