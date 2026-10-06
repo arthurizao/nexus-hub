@@ -1,0 +1,35 @@
+# NEXUS Hub .gitignore
+
+# Dependencies & Package Managers
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Operating System & Editor Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# IDE & Editor configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Backups & Local Exports
+*.log
+nexus-backup*.json
+*-backup.json
+
+# Test & Automation artifacts
+test-results/
+playwright-report/
+.playwright/
+coverage/

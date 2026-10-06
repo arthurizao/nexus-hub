@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS Hub — Preview & Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, #151a2e 0%, #080a12 100%);
+      color: #9ba6bf;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      padding: 40px 24px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(167, 139, 250, 0.15);
+      color: #a78bfa;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      margin-bottom: 12px;
+    }
+    h1 {
+      color: #f1f5f9;
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin: 0 0 12px;
+    }
+    p {
+      line-height: 1.7;
+      margin: 0 0 16px;
+      font-size: 16px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .info-card {
+      background: rgba(22, 27, 44, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+    .info-card h3 {
+      color: #edf2f7;
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+    .kbd {
+      background: #111422;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 5px;
+      padding: 2px 7px;
+      font-size: 12px;
+      font-family: monospace;
+      color: #a78bfa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">NEXUS HUB v1.2.0 • PREVIEW INTERATIVO</span>
+    <h1>Ambiente de Demonstração</h1>
+    <p>O <strong>NEXUS Hub</strong> foi injetado nesta página isoladamente via <em>Shadow DOM</em>. Você pode arrastar a janela pelo cabeçalho, redimensionar, minimizar para o Mini-Dock flutuante ou explorar todas as ferramentas offline e online.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>⌨️ Atalhos Globais</h3>
+        <p><span class="kbd">Alt + Shift + N</span> abre ou oculta o Hub.<br>
+        <span class="kbd">Alt + Shift + M</span> alterna o Mini-Dock.<br>
+        <span class="kbd">Esc</span> fecha o painel.</p>
+      </div>
+      <div class="info-card">
+        <h3>✉️ Embed Studio</h3>
+        <p>Crie embeds do Discord com prévia idêntica ao cliente oficial e dispare para seu canal por Webhook.</p>
+      </div>
+      <div class="info-card">
+        <h3>♬ Soundscapes Web Audio</h3>
+        <p>Sintetizador de áudio ambiente (chuva cyberpunk, drones espaciais e ondas alfa 432Hz) sem arquivos externos.</p>
+      </div>
+      <div class="info-card">
+        <h3>🖳 Cyber-Breach</h3>
+        <p>Minigame tático de decodificação de buffer inspirado no universo Cyberpunk 2077 para passar o tempo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carregamento do Hub -->
+  <script src="hub.js"></script>
+</body>
+</html>
