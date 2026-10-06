@@ -1,78 +1,62 @@
-# NEXUS Hub — 1.2.0 (Ultimate Personal Command Center)
+# NEXUS YouTube Power Hub — 2.0.0 (Glassmorphism Edition)
 
-Hub JavaScript modular projetado para ser executado como overlay no cliente do Discord ou em navegadores. Interface 100% isolada por **Shadow DOM**, com painel arrastável, redimensionável, modo Mini-Dock compacto, estética neon glassmorphism e persistência local (`localStorage`). Zero dependências externas de runtime.
+Overlay profissional e suíte de produtividade e controle para o **YouTube** e reprodutores de vídeo web.
+Construído com **Glassmorphism**, paleta oficial do YouTube (Vermelho `#FF0033`, Preto Fosco `#0F0F0F`, desfoque translúcido), isolamento via **Shadow DOM** e sem dependências externas.
 
 ---
 
-## ⚡ Começar Rápido
+## 🚀 Funcionalidades Incríveis
 
-1. **Preview Standalone:** Abra [`preview.html`](preview.html) em qualquer navegador moderno para explorar o painel interativo.
-2. **Repositório Git:** O projeto já possui repositório Git local e `.gitignore` configurado. Para sincronizar com o GitHub:
-   ```bash
-   git remote add origin https://github.com/SEU_USUARIO/nexus-hub.git
-   git push -u origin master
+### ⚡ Player Master & Reprodução
+1. **Controle Preciso de Velocidade Contínua:** Ajuste fino de 0.25x até 5.0x (ultrapassando o limite padrão de 2.0x do YouTube) com presets rápidos.
+2. **Volume Booster até 600%:** Amplificação de ganho via Web Audio API para vídeos com áudio baixo, podcasts ou videoaulas com gravação silenciosa.
+3. **Captura de Tela HD (Screenshot do Frame):** Captura o frame exato do vídeo na resolução máxima do streaming em PNG com 1 clique.
+4. **Picture-in-Picture (PiP) Forçado:** Destaca o vídeo em uma janela flutuante no sistema operacional.
+5. **Avanço/Retrocesso Rápido:** Atalhos para pular 10s ou 30s.
+6. **Detector & Skip de Anúncios:** Muta e acelera o término de anúncios.
+
+### 🎨 Cinema & Calibração Visual
+- **Filtros em Tempo Real:** Controle direto de Brilho, Contraste e Saturação no elemento `<video>`.
+- **Modos Predefinidos:** *Cores Vívidas*, *Modo Noturno Amoled* (reduz brilho e eleva contraste para telas OLED), *Preto & Branco* e *Sepia/Leitura*.
+
+### 🔁 A-B Looper (Repetição Contínua)
+- Marque o **Ponto A (Início)** e o **Ponto B (Fim)** para repetir um trecho específico em loop contínuo.
+- Indispensável para aprender passos de dança, solos musicais, tutoriais de código ou trechos de aulas.
+
+### 📝 Notas com Timestamp & Estudo
+- Crie anotações com timestamps automáticos sincronizados com o segundo exato do vídeo.
+- Clique no timestamp para pular imediatamente até aquele trecho.
+- Salva no `localStorage` separado por ID de cada vídeo.
+- Exportação em formato **Markdown** com links prontos para a descrição do YouTube.
+
+### ⏱ Gerador de Capítulos do YouTube
+- Marque momentos do vídeo e gere a lista padronizada do YouTube (`00:00 Introdução`, `03:45 Demonstração`, etc.).
+- Botão para copiar a lista pronta para a descrição ou comentário fixado.
+
+### 🛠 Extrator de Thumbnails & SEO Tools
+- Extração de miniaturas do vídeo atual em **MaxRes (1080p/4K)**, **HQ (720p)** e **MQ**.
+- **Calculadora de Playlist/Vídeo:** Descubra exatamente quanto tempo você vai demorar para assistir um vídeo ou curso inteiro em 1.25x, 1.5x, 1.75x ou 2.0x.
+
+### 🧘 Modo Zen & Shorts Converter
+- **Modo Zen:** Oculta barra lateral de recomendações, comentários e distrações para foco total no conteúdo.
+- **Conversor de Shorts para Player Padrão:** Transforma links `/shorts/ID` na interface normal do `/watch?v=ID` (devolvendo a barra de progresso, velocidade e tela cheia completa).
+
+### 🪟 Interface Glassmorphism & Mini HUD
+- **Mini HUD Flutuante:** Encolhe para uma barra compacta com controle de velocidade e botão de screenshot.
+- Janela arrastável, redimensionável e com controle de opacidade.
+- Atalho global: <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd> (ou <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> para o Mini HUD).
+
+---
+
+## ⚡ Como Carregar no YouTube
+
+### Método 1: Direto no Console do YouTube (Recomendado)
+1. No seu terminal, copie todo o script para o Clipboard:
+   ```powershell
+   Get-Content hub.js -Raw | Set-Clipboard
    ```
-3. **Loader no Discord:** Abra [`loader.js`](loader.js), altere para a URL raw do seu commit no GitHub e execute no console do Discord/Vencord.
-4. **Controles e Atalhos:**
-   - <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>: Abrir / Ocultar o NEXUS Hub.
-   - <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>: Alternar para o modo Mini-Dock flutuante.
-   - <kbd>Esc</kbd>: Fechar / Ocultar a janela.
-   - Botão `—`: Minimizar.
-   - Botão `⛶`: Alternar tela cheia / modo janela.
-   - Botão `⊟`: Encolher para Mini-Dock.
-   - Botão `×`: Descarregar completamente o hub da memória.
+2. Abra o [YouTube](https://www.youtube.com), aperte <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd> para abrir o Console.
+3. Cole com <kbd>Ctrl</kbd> + <kbd>V</kbd> e aperte <kbd>Enter</kbd>.
 
----
-
-## 🚀 Ferramentas e Funcionalidades
-
-### ◈ Principal
-- **Command Center:** Busca em tempo real com estatísticas rápidas de tarefas, textos e favoritos.
-- **Radar do Servidor:** Leitura de cargos, cores hexadecimais, IDs e membros em cache via stores internos do Vencord.
-- **Embed & Webhook Studio:** Construtor visual de Discord Embeds com prévia em tempo real idêntica ao Discord, exportação para JSON e disparo direto via Webhook.
-
-### ✎ Produtividade
-- **Cyber Tarefas:** Gerenciador de afazeres local com prioridades (Alta, Média, Baixa), cálculo de taxa de conclusão e barra de progresso.
-- **Bloco de Notas Inteligente:** Salva notas isoladas por servidor do Discord ou no escopo global.
-- **Textos Prontos:** Biblioteca de mensagens, modelos e respostas rápidas com cópia em 1 clique.
-- **Favoritos do Discord:** Links diretos salvos para canais e mensagens com detecção do canal atual.
-
-### ♬ Áudio & Estilo
-- **Soundscapes Web Audio:** Gerador de ruídos e ambiências sintetizados em tempo real (0 arquivos de áudio externos):
-  - *Chuva Cyberpunk* (pink/brown noise filtrado)
-  - *Deep Space Drone* (duplo oscilador grave 55Hz)
-  - *432Hz Harmonic Beats* (frequência de foco alfa)
-  - *Zumbido de Neon 60Hz* (ressonância elétrica cyberpunk)
-  - Controle de volume e visualizador dinâmico de ondas.
-- **Texto & Estilos:** Conversor de texto para fontes unicode (Gótico/Fraktur, Bold Sans, Italic, Círculos, Upside-down), gerador de Glitch Zalgo com slider e atalhos de Markdown do Discord.
-- **Color Studio:** Seletor de cores com conversão instantânea para HEX, RGB, HSL e **Discord Integer Color** (formato numérico decimal essencial para desenvolvedores de bots), com cálculo de contraste WCAG.
-- **Biblioteca Kaomoji:** Seleção de emoticons clássicos japoneses para envio imediato.
-
-### ☀ Consultas & Utilitários
-- **Cripto Ticker:** Cotações ao vivo de Bitcoin (BTC), Ethereum (ETH), Solana (SOL), BNB, XRP e DOGE em USD e BRL via API pública do CoinGecko.
-- **Previsão do Tempo:** Geocodificação de cidades e previsão climática de 3 dias via Open-Meteo.
-- **Tradutor:** Tradução rápida em múltiplos idiomas via MyMemory.
-- **GitHub Explorer:** Consulta pública de repositórios, estrelas, forks, linguagem e último push.
-- **Discord Timestamps:** Gerador dos 7 formatos nativos de timestamp dinâmico `<t:timestamp:F>`.
-- **Modo Foco (Pomodoro):** Timer com notificação sonora e sincronização com o Mini-Dock.
-- **Cyber-Breach Game:** Minigame de hacking inspirado no universo Cyberpunk 2077 para entretenimento tático.
-- **Diagnóstico & Ping:** Teste de latência de rede em tempo real contra o Discord Gateway, Cloudflare e Google DNS.
-- **Snowflake Decoder:** Conversão de IDs de usuários/canais do Discord para timestamp exato de criação.
-- **Formatador JSON & Sorteador Criptográfico:** Utilitários para formatação e sorteios sem viés pseudoaleatório (`crypto.getRandomValues`).
-
----
-
-## 🔒 Privacidade & Segurança
-
-- **Zero Telemetria:** Nenhuma informação privada, credencial ou token é interceptado ou enviado a servidores de terceiros.
-- **Armazenamento Local:** Todas as notas, snippets, tarefas e preferências residem exclusivamente no `localStorage` do seu navegador/cliente.
-- **Exportação & Backup v2:** Backup e restauração completos em formato JSON com sanitização e retrocompatibilidade com a versão 1.0.
-
----
-
-## 📚 Fontes e APIs Utilizadas
-
-- [Open-Meteo Weather API](https://open-meteo.com/en/docs) (CC BY 4.0)
-- [CoinGecko Simple Price API](https://www.coingecko.com/en/api)
-- [GitHub REST API](https://docs.github.com/en/rest/repos/repos)
-- [MyMemory Translation API](https://mymemory.translated.net/doc/spec.php)
+### Método 2: Testar Localmente
+Abra [`preview.html`](preview.html) em qualquer navegador para experimentar o hub com o player de vídeo integrado.

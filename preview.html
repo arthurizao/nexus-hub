@@ -3,104 +3,153 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NEXUS Hub — Preview & Dashboard</title>
+  <title>NEXUS YouTube Studio — Preview & Test Player</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at 20% 20%, #151a2e 0%, #080a12 100%);
-      color: #9ba6bf;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
-      padding: 40px 24px;
-      overflow-x: hidden;
+      background: radial-gradient(circle at 10% 20%, #1a0007 0%, #0a0a0a 100%);
+      color: #eaeaea;
+      font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
+    .header {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
     }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: rgba(167, 139, 250, 0.15);
-      color: #a78bfa;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      border: 1px solid rgba(167, 139, 250, 0.3);
-      margin-bottom: 12px;
-    }
-    h1 {
-      color: #f1f5f9;
-      font-size: 36px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
       font-weight: 900;
-      letter-spacing: -1px;
-      margin: 0 0 12px;
+      letter-spacing: -0.5px;
     }
-    p {
-      line-height: 1.7;
-      margin: 0 0 16px;
-      font-size: 16px;
+    .yt-icon {
+      background: #ff0033;
+      color: white;
+      width: 32px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      box-shadow: 0 0 16px rgba(255, 0, 51, 0.4);
     }
-    .info-grid {
+    .player-box {
+      width: 100%;
+      max-width: 960px;
+      background: rgba(20, 20, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 0, 51, 0.15);
+      backdrop-filter: blur(20px);
+    }
+    video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      display: block;
+    }
+    .info-bar {
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .info-bar h2 { margin: 0; font-size: 18px; color: #fff; }
+    .instructions {
+      max-width: 960px;
+      width: 100%;
+      margin-top: 24px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
-      margin: 32px 0;
     }
-    .info-card {
-      background: rgba(22, 27, 44, 0.6);
+    .instruction-card {
+      background: rgba(25, 25, 25, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
+      padding: 16px;
+      backdrop-filter: blur(14px);
     }
-    .info-card h3 {
-      color: #edf2f7;
-      margin: 0 0 8px;
-      font-size: 17px;
+    .instruction-card h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      color: #ff4d6d;
+    }
+    .instruction-card p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #aaa;
     }
     .kbd {
-      background: #111422;
+      background: #111;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 5px;
-      padding: 2px 7px;
-      font-size: 12px;
+      border-radius: 4px;
+      padding: 2px 6px;
       font-family: monospace;
-      color: #a78bfa;
+      color: #ff0033;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <span class="badge">NEXUS HUB v1.2.0 • PREVIEW INTERATIVO</span>
-    <h1>Ambiente de Demonstração</h1>
-    <p>O <strong>NEXUS Hub</strong> foi injetado nesta página isoladamente via <em>Shadow DOM</em>. Você pode arrastar a janela pelo cabeçalho, redimensionar, minimizar para o Mini-Dock flutuante ou explorar todas as ferramentas offline e online.</p>
+  <div class="header">
+    <div class="brand">
+      <div class="yt-icon">▶</div>
+      <span>NEXUS YouTube Studio</span>
+    </div>
+    <div>
+      <span style="font-size: 12px; color: #888;">Preview com Player Ativo</span>
+    </div>
+  </div>
 
-    <div class="info-grid">
-      <div class="info-card">
-        <h3>⌨️ Atalhos Globais</h3>
-        <p><span class="kbd">Alt + Shift + N</span> abre ou oculta o Hub.<br>
-        <span class="kbd">Alt + Shift + M</span> alterna o Mini-Dock.<br>
-        <span class="kbd">Esc</span> fecha o painel.</p>
-      </div>
-      <div class="info-card">
-        <h3>✉️ Embed Studio</h3>
-        <p>Crie embeds do Discord com prévia idêntica ao cliente oficial e dispare para seu canal por Webhook.</p>
-      </div>
-      <div class="info-card">
-        <h3>♬ Soundscapes Web Audio</h3>
-        <p>Sintetizador de áudio ambiente (chuva cyberpunk, drones espaciais e ondas alfa 432Hz) sem arquivos externos.</p>
-      </div>
-      <div class="info-card">
-        <h3>🖳 Cyber-Breach</h3>
-        <p>Minigame tático de decodificação de buffer inspirado no universo Cyberpunk 2077 para passar o tempo.</p>
+  <div class="player-box">
+    <!-- Big Buck Bunny video sample for real HTML5 video testing -->
+    <video controls autoplay loop muted playsinline crossorigin="anonymous">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+    </video>
+    <div class="info-bar">
+      <div>
+        <h2>Vídeo de Demonstração (HTML5 Player)</h2>
+        <span style="font-size: 13px; color: #888;">O hub interage diretamente com a tag &lt;video&gt; acima.</span>
       </div>
     </div>
   </div>
 
-  <!-- Carregamento do Hub -->
+  <div class="instructions">
+    <div class="instruction-card">
+      <h3>⚡ Velocidade & Booster</h3>
+      <p>Altere a velocidade livremente até 5.0x e aumente o volume até 600% no painel do Hub.</p>
+    </div>
+    <div class="instruction-card">
+      <h3>📸 Captura HD & Filtros</h3>
+      <p>Tire screenshots do frame original em 1080p e aplique filtros de saturação, contraste e modo noturno.</p>
+    </div>
+    <div class="instruction-card">
+      <h3>🔁 A-B Looper & Notas</h3>
+      <p>Defina o Ponto A e Ponto B para repetir trechos do vídeo ou adicione notas clicáveis por tempo.</p>
+    </div>
+    <div class="instruction-card">
+      <h3>⌨️ Atalhos Rápidos</h3>
+      <p><span class="kbd">Alt + Shift + Y</span> abre o Hub.<br><span class="kbd">Alt + Shift + M</span> abre o Mini-HUD.</p>
+    </div>
+  </div>
+
+  <!-- Injeção do Hub -->
   <script src="hub.js"></script>
 </body>
 </html>
